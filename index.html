@@ -1,114 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mortgage Affordability Calculator</title>
-    <style>
-        body {
-            background-color: #514e59;
-            color: #fcfcfc;
-            font-family: sans-serif;
-            margin: 0;
-            padding: 10px;
-            text-align: center; /* Center everything */
-        }
+<title>Mortgage Calculator</title>
+<style>
+body {
+    font-family: Arial, sans-serif; /* A good starting point */
+    margin: 20px;
+}
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 10px;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-        }
+.calculator {
+    width: 350px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+}
 
-        .apply {
-            font-size: 1.5em;
-            margin-top: 1em;
-            color: #fcfcfc;
-        }
+label {
+    display: block;
+    margin-bottom: 5px;
+}
 
-        .disclaimer {
-            font-size: 0.6em;
-            margin-top: 1em;
-            color: #a9a9a9;
-        }
+input[type="number"],
+input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box; /* Important for consistent sizing */
+}
 
-        .divider {
-            border-top: 1px solid #ccc; /* Adds a horizontal line */
-            margin: 10px 0; /* Adjust spacing above and below the line */
-        }
+#applyButton {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px; /*  Adjust this value */
+    cursor: pointer;
+    border-radius: 5px;
+}
 
-        /* Style for the APPLY NOW button */
-        .apply button {
-            font-size: 1.2em;
-            padding: 12px 24px;
-            background-color: #2980b9;  /* A nice blue */
-            color: #ffffff;         /* White text */
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease 0s; /* More comprehensive transition */
-            box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow */
-            outline: none;  /* Remove the focus outline */
-            font-weight: bold; /* Make the text a bit bolder */
-        }
+#result {
+    margin-top: 20px;
+    font-weight: bold;
+}
 
-        .apply button:hover {
-            background-color: #3498db;  /* Lighter blue on hover */
-            transform: translateY(-2px); /* Slightly lift the button on hover */
-            box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.3);  /* Increase shadow on hover */
-        }
+/* Specific spacing for the Apply button */
+.apply-button-container {
+  margin-top: 15px; /* Adjust this to fine-tune spacing */
+}
 
-        .apply button:active {
-            background-color: #2980b9; /* Keep same blue on click */
-            transform: translateY(0);     /* Reset position on click */
-            box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.2); /* Smaller shadow on click */
-        }
-    </style>
+
+</style>
 </head>
 <body>
-    <div class="container">  <!-- Moved opening tag here -->
-        <h1><u>Mortgage Affordability Calculator</u></h1>
-        <p style ="font-size: 14px;">Estimate your potential mortgage affordability by entering your <b><u>monthly</u></b> income,<br>
-            subject property expenses (tax, condo fee, heating) and debt payment amounts.*</p>
-        <br>
-        <div id="affordability-calculator"></div>
-        <script type="text/javascript" src="https://home.ca/static/js/calculators.js" defer="defer"></script>
-        <noscript>To view the <a href="https://home.ca">affordability calculator</a> you must have JavaScript turned on</noscript>
-        <script type="text/javascript">
-            var affordabilityCalculator = {
-                container: 'affordability-calculator',
-                colorText: '#a9a9a9',
-                colorBackground: '#514e59',
-                colorTotal: '#fcfcfc',
-                colorInfo: '#897d95',
-                fontFamily: 'Tahoma, Geneva, sans-serif',
-                width: '600',
-                income: '0',
-                downPayment: '0',
-                interest: '4.5',
-                logo: 'https://vanderluitmortgage.carrd.co/assets/images/image03.png?v=5bdc986b',
-                title: ''
-            }
-        </script>
 
-		<div class="divider"></div> <!-- Add the divider -->
+<div class="calculator">
+    <h2>Mortgage Calculator</h2>
 
-        <p class="apply">
-            <b>Click below to start your full<br>
-		    pre-approval application online.</b><br>
-		
-            <a href="https://apply.mortgageboss.ca/MAC/chrisvanderluit">
-                <button>APPLY NOW</button>
-            </a>
-        </p>
-        <p class="disclaimer">
-            <i>*This is an estimate only and does not guarantee loan approval.  Actual loan terms may vary.</i>
-        </p>
+    <label for="principal">Loan Amount:</label>
+    <input type="number" id="principal" value="200000">
 
+    <label for="interestRate">Annual Interest Rate (%):</label>
+    <input type="number" id="interestRate" value="5.0">
 
+    <label for="loanTerm">Loan Term (Years):</label>
+    <input type="number" id="loanTerm" value="30">
 
-    </div>  <!-- Moved closing tag here -->
+    <label for="zipCode">Zip Code:</label>
+    <input type="text" id="zipCode" value="90210">
+
+    <div class="apply-button-container">
+      <button id="applyButton">Apply Now</button>
+    </div>
+
+    <div id="result"></div>
+</div>
+
+<script>
+document.getElementById("applyButton").addEventListener("click", function() {
+    // In a real application, you would:
+    // 1.  Gather the input values (principal, interestRate, loanTerm, zipCode).
+    // 2.  Validate the input data (e.g., check for valid numbers, zip code format).
+    // 3.  Send the data to your backend server (using `fetch` or `XMLHttpRequest`).
+    // 4.  Handle the response from the server.  This might involve displaying
+    //     an application ID, a confirmation message, or error messages.
+
+    // For this example, just display a placeholder message.
+    document.getElementById("result").textContent = "Application submitted! (This is a demo)";
+});
+</script>
+
 </body>
 </html>
